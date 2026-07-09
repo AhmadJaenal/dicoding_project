@@ -60,6 +60,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        //test
         BlocProvider(create: (_) => di.locator<GetDetailMovieBloc>()),
         BlocProvider(create: (_) => di.locator<GetMovieRecommendationBloc>()),
         BlocProvider(create: (_) => di.locator<GetMovieTopRatedBloc>()),
