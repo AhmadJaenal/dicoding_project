@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:ditonton/common/exception.dart';
 import 'package:ditonton/data/models/serial_tv_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 
 abstract class SerialTVRemoteDataSource {
   Future<List<SerialTVModel>> getSerialTV();
@@ -17,7 +17,7 @@ class SerialTVRemoteDataSourceImpl implements SerialTVRemoteDataSource {
   static const API_KEY = 'api_key=2174d146bb9c0eab47529b2e77d6b526';
   static const BASE_URL = 'https://api.themoviedb.org/3';
 
-  final http.Client client;
+  final IOClient client;
 
   SerialTVRemoteDataSourceImpl({required this.client});
 

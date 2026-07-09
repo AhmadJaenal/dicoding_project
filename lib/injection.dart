@@ -1,3 +1,4 @@
+import 'package:ditonton/common/ssl_pinning_http_client.dart';
 import 'package:ditonton/data/datasources/db/database_helper.dart';
 import 'package:ditonton/data/datasources/movie_local_data_source.dart';
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
@@ -41,10 +42,11 @@ import 'package:ditonton/presentation/bloc/search/search_bloc.dart';
 import 'package:ditonton/presentation/bloc/watchlist/watchlist_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 
 final locator = GetIt.instance;
 
-void init() {
+void init() async {
   // bloc
   locator.registerFactory(() => GetDetailMovieBloc(locator(), locator()));
   locator.registerFactory(() => GetMovieTopRatedBloc(locator()));
@@ -116,4 +118,8 @@ void init() {
 
   // external
   locator.registerLazySingleton(() => http.Client());
+
+  // http client
+  final client = await SSLPinningHttpClient.getClient();
+  locator.registerLazySingleton<IOClient>(() => client);
 }
