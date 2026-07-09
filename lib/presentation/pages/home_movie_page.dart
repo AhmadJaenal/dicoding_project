@@ -53,7 +53,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
           children: [
             UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage('assets/circle-g.png'),
+                backgroundImage: AssetImage('assets/images/circle-g.png'),
                 backgroundColor: Colors.grey.shade900,
               ),
               accountName: Text('Ditonton'),
