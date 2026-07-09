@@ -50,6 +50,18 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
               );
         }
 
+        if (watchlistState is WatchListRemoveDataSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(watchlistState.message),
+            ),
+          );
+
+          context.read<GetDetailMovieBloc>().add(
+                GetStatusWatchlistRequested(widget.id),
+              );
+        }
+
         if (watchlistState is WatchListFailure) {
           showDialog(
             context: context,

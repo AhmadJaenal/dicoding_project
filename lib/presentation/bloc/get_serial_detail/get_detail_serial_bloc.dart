@@ -17,6 +17,7 @@ class GetDetailSerialBloc
     this._getWatchListStatus,
   ) : super(GetDetailSerialInitial()) {
     on<GetDetailSerialRequested>(_onRequested);
+    on<GetStatusWatchlistSerialRequested>(_onStatusRequested);
   }
 
   Future<void> _onRequested(GetDetailSerialRequested event,
@@ -39,5 +40,14 @@ class GetDetailSerialBloc
         );
       },
     );
+  }
+
+  Future<void> _onStatusRequested(GetStatusWatchlistSerialRequested event,
+      Emitter<GetDetailSerialState> emit) async {
+    final currentState = state;
+    if (currentState is GetDetailSerialLoaded) {
+      final status = await _getWatchListStatus.execute(event.id);
+      emit(currentState.copyWith(isAddedToWatchlist: status));
+    }
   }
 }

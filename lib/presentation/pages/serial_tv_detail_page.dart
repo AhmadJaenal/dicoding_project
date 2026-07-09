@@ -49,6 +49,18 @@ class _SerialTVDetailState extends State<SerialTVDetail> {
               );
         }
 
+        if (watchlistState is WatchListRemoveDataSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(watchlistState.message),
+            ),
+          );
+
+          context.read<GetDetailSerialBloc>().add(
+                GetStatusWatchlistSerialRequested(widget.id),
+              );
+        }
+
         if (watchlistState is WatchListFailure) {
           showDialog(
             context: context,

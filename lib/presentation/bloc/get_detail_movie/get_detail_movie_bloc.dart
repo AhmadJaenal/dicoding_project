@@ -14,6 +14,7 @@ class GetDetailMovieBloc
   GetDetailMovieBloc(this._getMovieDetail, this._getWatchListStatus)
       : super(GetDetailMovieInitial()) {
     on<GetDetailMovieRequested>(_onRequested);
+    on<GetStatusWatchlistRequested>(_onStatusRequested);
   }
 
   Future<void> _onRequested(
@@ -39,5 +40,14 @@ class GetDetailMovieBloc
         );
       },
     );
+  }
+
+  Future<void> _onStatusRequested(GetStatusWatchlistRequested event,
+      Emitter<GetDetailMovieState> emit) async {
+    final currentState = state;
+    if (currentState is GetDetailMovieLoaded) {
+      final status = await _getWatchListStatus.execute(event.id);
+      emit(currentState.copyWith(isAddedToWatchlist: status));
+    }
   }
 }
