@@ -1,8 +1,7 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/presentation/provider/serial_tv_top_rated_notifier.dart';
+import 'package:ditonton/presentation/bloc/get_serial_top_rated/get_serial_top_rated_bloc.dart';
 import 'package:ditonton/presentation/widgets/serial_tv_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SerialTVTopRatedPage extends StatefulWidget {
   static const ROUTE_NAME = '/serial-tv-top-rated';
@@ -16,8 +15,7 @@ class _SerialTVTopRatedPageState extends State<SerialTVTopRatedPage> {
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<SerialTVTopRatedNotifier>(context, listen: false)
-            .fetchSerialTVTopRated());
+        context.read<GetSerialTopRatedBloc>().add(GetSerialTopRequested()));
   }
 
   @override
@@ -28,25 +26,22 @@ class _SerialTVTopRatedPageState extends State<SerialTVTopRatedPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<SerialTVTopRatedNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+        child: BlocBuilder<GetSerialTopRatedBloc, GetSerialTopRatedState>(
+          builder: (context, state) {
+            if (state is GetSerialTopRatedLoading) {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.state == RequestState.Loaded) {
+            } else if (state is GetSerialTopRatedLoaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final movie = data.serialTV[index];
+                  final movie = state.serials[index];
                   return SerialTVCard(movie);
                 },
-                itemCount: data.serialTV.length,
+                itemCount: state.serials.length,
               );
             } else {
-              return Center(
-                key: Key('error_message'),
-                child: Text(data.message),
-              );
+              return Text('Failed');
             }
           },
         ),

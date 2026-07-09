@@ -10,14 +10,16 @@ class GetMovieBloc extends Bloc<GetMovieEvent, GetMovieState> {
   final GetNowPlayingMovies _getNowPlayingMovies;
 
   GetMovieBloc(this._getNowPlayingMovies) : super(GetMovieInitial()) {
-    on<GetMovieEvent>((event, emit) async {
-      final result = await _getNowPlayingMovies.execute();
+    on<GetMovieEventRequested>(_onRequested);
+  }
 
-      result.fold((failure) {
-        emit(GetMovieError(failure.message));
-      }, (data) {
-        emit(GetMovieLoaded(data));
-      });
-    });
+  Future<void> _onRequested(
+      GetMovieEventRequested event, Emitter<GetMovieState> emit) async {
+    emit(GetMovieLoading());
+
+    final result = await _getNowPlayingMovies.execute();
+
+    result.fold((failure) => emit(GetMovieError(failure.message)),
+        (data) => emit(GetMovieLoaded(data)));
   }
 }

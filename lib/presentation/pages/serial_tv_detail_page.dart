@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/domain/entities/serial_tv.dart';
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/presentation/provider/serial_tv_detail_notifier.dart';
+import 'package:ditonton/presentation/bloc/get_serial_detail/get_detail_serial_bloc.dart';
+import 'package:ditonton/presentation/bloc/get_serial_recommend/get_serial_recommendation_bloc.dart';
+import 'package:ditonton/presentation/bloc/watchlist/watchlist_bloc.dart';
+import 'package:ditonton/presentation/widgets/cache_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:provider/provider.dart';
 
 class SerialTVDetail extends StatefulWidget {
   static const ROUTE_NAME = '/serial-tv-detail';
@@ -21,38 +23,90 @@ class _SerialTVDetailState extends State<SerialTVDetail> {
   @override
   void initState() {
     super.initState();
-
     Future.microtask(() {
-      final notifier =
-          Provider.of<SerialTVDetailNotifier>(context, listen: false);
-
-      notifier.fetchSerialTVDetail(widget.id);
-      notifier.loadWatchlistStatus(widget.id);
+      context
+          .read<GetDetailSerialBloc>()
+          .add(GetDetailSerialRequested(widget.id));
+      context
+          .read<GetSerialRecommendationBloc>()
+          .add(GetSerialRecommendationRequested(widget.id));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Consumer<SerialTVDetailNotifier>(
-        builder: (context, provider, child) {
-          if (provider.state == RequestState.Loading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (provider.state == RequestState.Loaded) {
-            final SerialTV = provider.serialTV;
-            return SafeArea(
-              child: DetailContent(
-                SerialTV,
-                provider.serialTVRecommendations,
-                provider.isAddedToWatchlist,
-              ),
-            );
-          } else {
-            return Text(provider.message);
-          }
-        },
+    return BlocListener<WatchlistBloc, WatchListState>(
+      listener: (context, watchlistState) {
+        if (watchlistState is WatchListAddDataSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(watchlistState.message),
+            ),
+          );
+
+          context.read<GetDetailSerialBloc>().add(
+                GetStatusWatchlistSerialRequested(widget.id),
+              );
+        }
+
+        if (watchlistState is WatchListFailure) {
+          showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+              content: Text(watchlistState.message),
+            ),
+          );
+        }
+      },
+      child: Scaffold(
+        body: BlocBuilder<GetDetailSerialBloc, GetDetailSerialState>(
+          builder: (context, state) {
+            if (state is GetDetailSerialLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            if (state is GetDetailSerialLoaded) {
+              return BlocBuilder<GetSerialRecommendationBloc,
+                  GetSerialRecommendationState>(
+                builder: (context, recommendationState) {
+                  if (recommendationState is GetSerialRecommendationLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (recommendationState is GetSerialRecommendationLoaded) {
+                    return SafeArea(
+                      child: DetailContent(
+                        state.serial,
+                        recommendationState.serials,
+                        state.isAddedToWatchlist,
+                      ),
+                    );
+                  }
+
+                  if (recommendationState is GetSerialRecommendationFailure) {
+                    return Center(
+                      child: Text('recommendationState.message'),
+                    );
+                  }
+
+                  return const SizedBox.shrink();
+                },
+              );
+            }
+
+            if (state is GetDetailSerialFailure) {
+              return Center(
+                child: Text('state.message'),
+              );
+            }
+
+            return const SizedBox.shrink();
+          },
+        ),
       ),
     );
   }
@@ -108,38 +162,13 @@ class DetailContent extends StatelessWidget {
                             FilledButton(
                               onPressed: () async {
                                 if (!isAddedWatchlist) {
-                                  await Provider.of<SerialTVDetailNotifier>(
-                                          context,
-                                          listen: false)
-                                      .addWatchlist(serialTV);
+                                  context
+                                      .read<WatchlistBloc>()
+                                      .add(WatchlistAddDataSerial(serialTV));
                                 } else {
-                                  await Provider.of<SerialTVDetailNotifier>(
-                                          context,
-                                          listen: false)
-                                      .removeFromWatchlist(serialTV);
-                                }
-
-                                final message =
-                                    Provider.of<SerialTVDetailNotifier>(context,
-                                            listen: false)
-                                        .watchlistMessage;
-
-                                if (message ==
-                                        SerialTVDetailNotifier
-                                            .watchlistAddSuccessMessage ||
-                                    message ==
-                                        SerialTVDetailNotifier
-                                            .watchlistRemoveSuccessMessage) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text(message)));
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          content: Text(message),
-                                        );
-                                      });
+                                  context
+                                      .read<WatchlistBloc>()
+                                      .add(WatchlistRemoveDataSerial(serialTV));
                                 }
                               },
                               child: Row(
@@ -179,24 +208,20 @@ class DetailContent extends StatelessWidget {
                               'Recommendations',
                               style: heading6,
                             ),
-                            Consumer<SerialTVDetailNotifier>(
-                              builder: (context, data, child) {
-                                if (data.recommendationState ==
-                                    RequestState.Loading) {
+                            BlocBuilder<GetSerialRecommendationBloc,
+                                GetSerialRecommendationState>(
+                              builder: (context, state) {
+                                if (state is GetSerialRecommendationLoading) {
                                   return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                } else if (data.recommendationState ==
-                                    RequestState.Error) {
-                                  return Text(data.message);
-                                } else if (data.recommendationState ==
-                                    RequestState.Loaded) {
+                                      child: CircularProgressIndicator());
+                                } else if (state
+                                    is GetSerialRecommendationLoaded) {
                                   return Container(
                                     height: 150,
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       itemBuilder: (context, index) {
-                                        final movie = recommendations[index];
+                                        final serial = recommendations[index];
                                         return Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: InkWell(
@@ -204,24 +229,16 @@ class DetailContent extends StatelessWidget {
                                               Navigator.pushReplacementNamed(
                                                 context,
                                                 SerialTVDetail.ROUTE_NAME,
-                                                arguments: movie.id,
+                                                arguments: serial.id,
                                               );
                                             },
                                             child: ClipRRect(
                                               borderRadius: BorderRadius.all(
                                                 Radius.circular(8),
                                               ),
-                                              child: CachedNetworkImage(
+                                              child: CustomCacheImage(
                                                 imageUrl:
-                                                    'https://image.tmdb.org/t/p/w500${movie.posterPath}',
-                                                placeholder: (context, url) =>
-                                                    Center(
-                                                  child:
-                                                      CircularProgressIndicator(),
-                                                ),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        Icon(Icons.error),
+                                                    'https://image.tmdb.org/t/p/w500${serial.posterPath}',
                                               ),
                                             ),
                                           ),
@@ -231,7 +248,7 @@ class DetailContent extends StatelessWidget {
                                     ),
                                   );
                                 } else {
-                                  return Container();
+                                  return Text('Failed');
                                 }
                               },
                             ),
