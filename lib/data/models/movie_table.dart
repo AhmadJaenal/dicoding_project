@@ -1,12 +1,17 @@
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
 import 'package:equatable/equatable.dart';
+import 'package:core/entities/watchlist_table.dart';
 
-class MovieTable extends Equatable {
-  final int id;
+class MovieTable extends Equatable implements WatchlistTable {
   final String? title;
   final String? posterPath;
   final String? overview;
+
+  @override
+  final int id;
+
+  @override
   final int isMovie;
 
   MovieTable({

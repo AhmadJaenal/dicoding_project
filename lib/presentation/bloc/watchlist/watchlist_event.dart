@@ -14,17 +14,7 @@ class WatchlistAddDataMovie extends WatchListEvent {
   const WatchlistAddDataMovie(this.movieDetail);
 }
 
-class WatchlistAddDataSerial extends WatchListEvent {
-  final SerialTV serialDetail;
-  const WatchlistAddDataSerial(this.serialDetail);
-}
-
 class WatchlistRemoveDataMovie extends WatchListEvent {
   final MovieDetail movieDetail;
   const WatchlistRemoveDataMovie(this.movieDetail);
-}
-
-class WatchlistRemoveDataSerial extends WatchListEvent {
-  final SerialTV serialTVDetail;
-  const WatchlistRemoveDataSerial(this.serialTVDetail);
 }

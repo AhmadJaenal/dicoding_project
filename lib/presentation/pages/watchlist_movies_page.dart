@@ -1,10 +1,10 @@
-import 'package:ditonton/common/utils.dart';
-import 'package:ditonton/domain/entities/serial_tv.dart';
+import 'package:core/utils/utils.dart';
 import 'package:ditonton/presentation/bloc/watchlist/watchlist_bloc.dart';
 import 'package:ditonton/presentation/widgets/movie_card_list.dart';
-import 'package:ditonton/presentation/widgets/serial_tv_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:serialtv/domain/entities/serial_tv.dart';
+import 'package:serialtv/presentation/widgets/serial_tv_card_list.dart';
 
 class WatchlistMoviesPage extends StatefulWidget {
   static const ROUTE_NAME = '/watchlist-movie';
@@ -62,6 +62,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                   } else {
                     return SerialTVCard(
                       SerialTV.watchlist(
+                        isMovie: 1,
                         id: movie.id,
                         name: movie.title ?? '-',
                         overview: movie.overview ?? '-',

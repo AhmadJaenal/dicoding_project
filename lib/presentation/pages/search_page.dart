@@ -1,9 +1,9 @@
-import 'package:ditonton/common/constants.dart';
+import 'package:core/utils/constants.dart';
 import 'package:ditonton/presentation/bloc/search/search_bloc.dart';
 import 'package:ditonton/presentation/widgets/movie_card_list.dart';
-import 'package:ditonton/presentation/widgets/serial_tv_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:serialtv/presentation/widgets/serial_tv_card_list.dart';
 
 class SearchPage extends StatelessWidget {
   static const ROUTE_NAME = '/search';
@@ -36,7 +36,8 @@ class SearchPage extends StatelessWidget {
             ),
             BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
               if (state is SearchLoading) {
-                return Center(child: CircularProgressIndicator());
+                return Expanded(
+                    child: Center(child: CircularProgressIndicator()));
               } else if (state is SearchHasData) {
                 final result = state.movies;
                 return Expanded(
@@ -49,6 +50,9 @@ class SearchPage extends StatelessWidget {
                     itemCount: result.length,
                   ),
                 );
+              } else if (state is SearchEmpty) {
+                return Expanded(
+                    flex: 1, child: Center(child: Text('Tidak ada')));
               } else {
                 return Text('Failed');
               }
@@ -73,6 +77,9 @@ class SearchPage extends StatelessWidget {
                     itemCount: result.length,
                   ),
                 );
+              } else if (state is SearchEmpty) {
+                return Expanded(
+                    flex: 1, child: Center(child: Text('Tidak ada')));
               } else {
                 return Text('Failed');
               }

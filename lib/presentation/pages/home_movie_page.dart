@@ -1,27 +1,26 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ditonton/common/constants.dart';
+import 'package:core/utils/constants.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/presentation/bloc/get_movie_top_rated/get_movie_top_rated_bloc.dart';
-import 'package:ditonton/presentation/bloc/get_serial_playing_now/get_serial_playing_now_bloc.dart';
-import 'package:ditonton/presentation/bloc/get_serial_top_rated/get_serial_top_rated_bloc.dart';
 import 'package:ditonton/presentation/bloc/get_playing_now_movie/get_movie_bloc.dart';
 import 'package:ditonton/presentation/bloc/get_popular_movie/get_popular_movie_bloc.dart';
-import 'package:ditonton/presentation/bloc/get_serial_tv_popular/get_serial_tv_popular_bloc.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/movie_detail_page.dart';
 import 'package:ditonton/presentation/pages/now_playing_page.dart';
 import 'package:ditonton/presentation/pages/popular_movies_page.dart';
 import 'package:ditonton/presentation/pages/search_page.dart';
-import 'package:ditonton/presentation/pages/serial_tv_detail_page.dart';
-import 'package:ditonton/presentation/pages/serial_tv_page.dart';
-import 'package:ditonton/presentation/pages/serial_tv_playing_now_page.dart';
-import 'package:ditonton/presentation/pages/serial_tv_top_rated_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../domain/entities/serial_tv.dart';
+import 'package:serialtv/domain/entities/serial_tv.dart';
+import 'package:serialtv/presentation/bloc/get_serial_playing_now/get_serial_playing_now_bloc.dart';
+import 'package:serialtv/presentation/bloc/get_serial_top_rated/get_serial_top_rated_bloc.dart';
+import 'package:serialtv/presentation/bloc/get_serial_tv_popular/get_serial_tv_popular_bloc.dart';
+import 'package:serialtv/presentation/pages/serial_tv_detail_page.dart';
+import 'package:serialtv/presentation/pages/serial_tv_page.dart';
+import 'package:serialtv/presentation/pages/serial_tv_playing_now_page.dart';
+import 'package:serialtv/presentation/pages/serial_tv_top_rated_page.dart';
 
 class HomeMoviePage extends StatefulWidget {
   @override
