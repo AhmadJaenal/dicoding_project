@@ -1,6 +1,6 @@
-import 'package:ditonton/data/models/serial_tv_model.dart';
-import 'package:ditonton/domain/entities/serial_tv.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:serialtv/data/models/serial_tv_model.dart';
+import 'package:serialtv/domain/entities/serial_tv.dart';
 
 void main() {
   final tSerialTVModel = SerialTVModel(

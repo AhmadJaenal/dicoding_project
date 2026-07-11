@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">Mon Jul  6 16:17:36 2026</td>
+            <td class="headerValue">Sat Jul 11 19:45:37 2026</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -65,13 +65,13 @@
 <a name="3"><span class="lineNum">       3 </span>            : </a>
 <a name="4"><span class="lineNum">       4 </span>            : class CustomCacheImage extends StatelessWidget {</a>
 <a name="5"><span class="lineNum">       5 </span>            :   final String imageUrl;</a>
-<a name="6"><span class="lineNum">       6 </span><span class="lineCov">          1 :   const CustomCacheImage({super.key, required this.imageUrl});</span></a>
+<a name="6"><span class="lineNum">       6 </span><span class="lineCov">          2 :   const CustomCacheImage({super.key, required this.imageUrl});</span></a>
 <a name="7"><span class="lineNum">       7 </span>            : </a>
-<a name="8"><span class="lineNum">       8 </span><span class="lineCov">          1 :   @override</span></a>
+<a name="8"><span class="lineNum">       8 </span><span class="lineCov">          2 :   @override</span></a>
 <a name="9"><span class="lineNum">       9 </span>            :   Widget build(BuildContext context) {</a>
-<a name="10"><span class="lineNum">      10 </span><span class="lineCov">          1 :     return CachedNetworkImage(</span></a>
-<a name="11"><span class="lineNum">      11 </span><span class="lineCov">          1 :       imageUrl: imageUrl,</span></a>
-<a name="12"><span class="lineNum">      12 </span><span class="lineCov">          1 :       placeholder: (_, __) =&gt; const Center(</span></a>
+<a name="10"><span class="lineNum">      10 </span><span class="lineCov">          2 :     return CachedNetworkImage(</span></a>
+<a name="11"><span class="lineNum">      11 </span><span class="lineCov">          2 :       imageUrl: imageUrl,</span></a>
+<a name="12"><span class="lineNum">      12 </span><span class="lineCov">          2 :       placeholder: (_, __) =&gt; const Center(</span></a>
 <a name="13"><span class="lineNum">      13 </span>            :         child: CircularProgressIndicator(),</a>
 <a name="14"><span class="lineNum">      14 </span>            :       ),</a>
 <a name="15"><span class="lineNum">      15 </span><span class="lineNoCov">          0 :       errorWidget: (_, __, ___) =&gt; const Icon(Icons.error),</span></a>

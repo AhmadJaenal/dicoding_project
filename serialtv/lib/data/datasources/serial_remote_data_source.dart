@@ -6,7 +6,7 @@ import 'package:core/utils/exception.dart';
 import 'package:http/io_client.dart';
 import 'package:serialtv/data/models/serial_tv_model.dart';
 
-abstract class SerialTVRemoteDataSource {
+abstract class SerialRemoteDataSource {
   Future<List<SerialTVModel>> getSerialTV();
   Future<List<SerialTVModel>> getSerialTVTopRated();
   Future<List<SerialTVModel>> getSerialTVPlayingNow();
@@ -15,7 +15,7 @@ abstract class SerialTVRemoteDataSource {
   Future<List<SerialTVModel>> searchSerialTV(String query);
 }
 
-class SerialTVRemoteDataSourceImpl implements SerialTVRemoteDataSource {
+class SerialTVRemoteDataSourceImpl implements SerialRemoteDataSource {
   static const API_KEY = 'api_key=2174d146bb9c0eab47529b2e77d6b526';
   static const BASE_URL = 'https://api.themoviedb.org/3';
 

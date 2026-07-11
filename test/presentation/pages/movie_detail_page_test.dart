@@ -5,17 +5,11 @@ import 'package:ditonton/presentation/pages/movie_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../dummy_data/dummy_objects.dart';
-import 'movie_detail_page_test.mocks.dart';
+import '../../helpers/test_helper.mocks.dart';
 
-@GenerateMocks([
-  GetDetailMovieBloc,
-  GetMovieRecommendationBloc,
-  WatchlistBloc,
-])
 void main() {
   late MockGetDetailMovieBloc mockGetDetailMovieBloc;
   late MockGetMovieRecommendationBloc mockGetMovieRecommendationBloc;
@@ -149,7 +143,6 @@ void main() {
             GetDetailMovieLoaded(testMovieDetail, isAddedToWatchlist: false),
           ),
         );
-
         when(mockGetMovieRecommendationBloc.state).thenReturn(
           const GetMovieRecommendationLoaded([]),
         );
@@ -157,6 +150,9 @@ void main() {
           (_) => Stream.value(const GetMovieRecommendationLoaded([])),
         );
 
+        when(mockWatchlistBloc.state).thenReturn(
+          const WatchListAddDataSuccess('Added to Watchlist'),
+        );
         when(mockWatchlistBloc.stream).thenAnswer(
           (_) => Stream.value(
             const WatchListAddDataSuccess('Added to Watchlist'),
@@ -168,14 +164,13 @@ void main() {
             MovieDetailPage(id: 1),
           ),
         );
-
         await tester.pump();
-
         expect(find.byType(FilledButton), findsOneWidget);
 
         await tester.tap(find.byType(FilledButton));
 
-        await tester.pumpAndSettle();
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 750));
 
         expect(find.byType(SnackBar), findsOneWidget);
         expect(
@@ -196,7 +191,6 @@ void main() {
             GetDetailMovieLoaded(testMovieDetail, isAddedToWatchlist: false),
           ),
         );
-
         when(mockGetMovieRecommendationBloc.state).thenReturn(
           const GetMovieRecommendationLoaded([]),
         );
@@ -204,6 +198,9 @@ void main() {
           (_) => Stream.value(const GetMovieRecommendationLoaded([])),
         );
 
+        when(mockWatchlistBloc.state).thenReturn(
+          const WatchListFailure('Failed to add watchlist'),
+        );
         when(mockWatchlistBloc.stream).thenAnswer(
           (_) => Stream.value(
             const WatchListFailure('Failed to add watchlist'),
@@ -217,10 +214,7 @@ void main() {
         );
 
         await tester.pump();
-
-        await tester.tap(find.byType(FilledButton));
-
-        await tester.pumpAndSettle();
+        await tester.pump(const Duration(milliseconds: 300));
 
         expect(find.byType(AlertDialog), findsOneWidget);
         expect(find.text('Failed to add watchlist'), findsOneWidget);
@@ -388,7 +382,6 @@ void main() {
           GetDetailMovieLoaded(testMovieDetail, isAddedToWatchlist: true),
         ),
       );
-
       when(mockGetMovieRecommendationBloc.state).thenReturn(
         const GetMovieRecommendationLoaded([]),
       );
@@ -396,6 +389,9 @@ void main() {
         (_) => Stream.value(const GetMovieRecommendationLoaded([])),
       );
 
+      when(mockWatchlistBloc.state).thenReturn(
+        const WatchListRemoveDataSuccess('Removed from Watchlist'),
+      );
       when(mockWatchlistBloc.stream).thenAnswer(
         (_) => Stream.value(
           const WatchListRemoveDataSuccess('Removed from Watchlist'),
@@ -407,12 +403,11 @@ void main() {
           MovieDetailPage(id: 1),
         ),
       );
-
       await tester.pump();
-
       await tester.tap(find.byType(FilledButton));
 
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 750));
 
       expect(
         find.text('Removed from Watchlist'),

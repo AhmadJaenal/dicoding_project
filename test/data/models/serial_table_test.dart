@@ -1,6 +1,6 @@
-import 'package:ditonton/data/models/serial_table.dart';
-import 'package:ditonton/domain/entities/serial_tv.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:serialtv/data/models/serial_table.dart';
+import 'package:serialtv/domain/entities/serial_tv.dart';
 
 void main() {
   const tSerialTable = SerialTable(
@@ -8,6 +8,7 @@ void main() {
     title: 'Breaking Bad',
     posterPath: '/poster.jpg',
     overview: 'Overview',
+    isMovie: 0,
   );
 
   final tSerialTV = SerialTV(
@@ -33,6 +34,7 @@ void main() {
     overview: 'Overview',
     posterPath: '/poster.jpg',
     name: 'Breaking Bad',
+    isMovie: 0,
   );
 
   final tMap = {
@@ -74,6 +76,7 @@ void main() {
         title: 'Breaking Bad',
         posterPath: '/poster.jpg',
         overview: 'Overview',
+        isMovie: 0,
       );
 
       expect(tSerialTable, anotherTable);

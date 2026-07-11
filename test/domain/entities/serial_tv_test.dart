@@ -1,5 +1,5 @@
-import 'package:ditonton/domain/entities/serial_tv.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:serialtv/domain/entities/serial_tv.dart';
 
 void main() {
   final tSerialTV = SerialTV(
@@ -73,6 +73,7 @@ void main() {
       overview: 'This is an overview',
       posterPath: '/poster.jpg',
       name: 'Test Serial TV',
+      isMovie: 0,
     );
 
     test('should set required fields correctly', () {
@@ -102,6 +103,7 @@ void main() {
         overview: 'This is an overview',
         posterPath: '/poster.jpg',
         name: 'Test Serial TV',
+        isMovie: 0,
       );
 
       expect(tWatchlistSerialTV, tWatchlistSerialTVSecond);

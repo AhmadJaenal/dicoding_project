@@ -10,7 +10,7 @@ import 'package:serialtv/domain/entities/serial_tv.dart';
 import 'package:serialtv/domain/repositories/serial_tv_repository.dart';
 
 class SerialTVRepositoryImpl implements SerialTVRepository {
-  final SerialTVRemoteDataSource remoteDataSource;
+  final SerialRemoteDataSource remoteDataSource;
   final SerialLocalDataSource localDataSource;
 
   SerialTVRepositoryImpl({

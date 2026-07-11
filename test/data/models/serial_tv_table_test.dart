@@ -1,5 +1,5 @@
-import 'package:ditonton/data/models/serial_table.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:serialtv/data/models/serial_table.dart';
 
 void main() {
   final tSerialTV = SerialTable(
@@ -7,6 +7,7 @@ void main() {
     title: 'Test Serial TV',
     posterPath: '/poster.jpg',
     overview: 'This is an overview',
+    isMovie: 0,
   );
 
   final tSerialTVMap = {

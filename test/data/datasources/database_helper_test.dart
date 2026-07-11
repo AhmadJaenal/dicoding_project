@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:ditonton/data/datasources/db/database_helper.dart';
+import 'package:core/helper/database_helper.dart';
 import 'package:ditonton/data/models/movie_table.dart';
-import 'package:ditonton/data/models/serial_table.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:serialtv/data/models/serial_table.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
@@ -42,6 +42,7 @@ void main() {
     title: 'Breaking Bad',
     posterPath: '/serial.jpg',
     overview: 'Overview serial',
+    isMovie: 0,
   );
 
   group('Movie Watchlist', () {
@@ -82,7 +83,7 @@ void main() {
 
   group('Serial TV Watchlist', () {
     test('should insert serial to watchlist and be able to fetch it', () async {
-      await databaseHelper.insertSerialWatchlist(tSerialTable);
+      await databaseHelper.insertWatchlist(tSerialTable);
       final result =
           await databaseHelper.getWatchlistById(tSerialTable.id, false);
 
@@ -92,9 +93,9 @@ void main() {
     });
 
     test('should remove serial from watchlist', () async {
-      await databaseHelper.insertSerialWatchlist(tSerialTable);
+      await databaseHelper.insertWatchlist(tSerialTable);
 
-      await databaseHelper.removeSerialWatchlist(tSerialTable);
+      await databaseHelper.removeWatchlist(tSerialTable);
       final result =
           await databaseHelper.getWatchlistById(tSerialTable.id, false);
 

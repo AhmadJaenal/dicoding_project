@@ -35,7 +35,7 @@ void initSerial() async {
   );
 
   // data sources
-  locator.registerLazySingleton<SerialTVRemoteDataSource>(
+  locator.registerLazySingleton<SerialRemoteDataSource>(
     () => SerialTVRemoteDataSourceImpl(client: locator()),
   );
   locator.registerLazySingleton<SerialLocalDataSource>(

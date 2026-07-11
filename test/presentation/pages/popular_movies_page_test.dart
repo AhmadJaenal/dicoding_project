@@ -3,19 +3,20 @@ import 'package:ditonton/presentation/pages/popular_movies_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../dummy_data/dummy_objects.dart';
-import 'popular_movies_page_test.mocks.dart';
+import '../../helpers/test_helper.mocks.dart';
 
-@GenerateMocks([GetPopularMovieBloc])
 void main() {
   late MockGetPopularMovieBloc mockGetPopularMovieBloc;
 
+  setUpAll(() {
+    provideDummy<GetPopularMovieState>(GetPopularMovieInitial());
+  });
+
   setUp(() {
     mockGetPopularMovieBloc = MockGetPopularMovieBloc();
-
     when(mockGetPopularMovieBloc.stream).thenAnswer(
       (_) => Stream.value(GetPopularMovieInitial()),
     );
@@ -61,7 +62,6 @@ void main() {
     final listViewFinder = find.byType(ListView);
 
     await tester.pumpWidget(_makeTestableWidget(PopularMoviesPage()));
-
     await tester.pump();
 
     expect(listViewFinder, findsOneWidget);
@@ -78,7 +78,7 @@ void main() {
       ),
     );
 
-    final textFinder = find.byKey(const Key('error_message'));
+    final textFinder = find.text('Failed');
 
     await tester.pumpWidget(_makeTestableWidget(PopularMoviesPage()));
 
