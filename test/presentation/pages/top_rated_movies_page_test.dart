@@ -1,4 +1,4 @@
-import 'package:ditonton/presentation/bloc/get_movie_recommendation/get_movie_recommendation_bloc.dart';
+import 'package:ditonton/presentation/bloc/get_movie_top_rated/get_movie_top_rated_bloc.dart';
 import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,38 +9,36 @@ import '../../dummy_data/dummy_objects.dart';
 import '../../helpers/test_helper.mocks.dart';
 
 void main() {
-  late MockGetMovieRecommendationBloc mockGetMovieRecommendationBloc;
+  late MockGetMovieTopRatedBloc mockGetMovieTopRatedBloc;
 
   setUpAll(() {
-    provideDummy<GetMovieRecommendationState>(
-      GetMovieRecommendationInitial(),
-    );
+    provideDummy<GetMovieTopRatedState>(GetMovieTopRatedInitial());
   });
 
   setUp(() {
-    mockGetMovieRecommendationBloc = MockGetMovieRecommendationBloc();
-    when(mockGetMovieRecommendationBloc.stream).thenAnswer(
-      (_) => Stream.value(GetMovieRecommendationInitial()),
+    mockGetMovieTopRatedBloc = MockGetMovieTopRatedBloc();
+    when(mockGetMovieTopRatedBloc.stream).thenAnswer(
+      (_) => Stream.value(GetMovieTopRatedInitial()),
     );
-    when(mockGetMovieRecommendationBloc.state).thenReturn(
-      GetMovieRecommendationInitial(),
+    when(mockGetMovieTopRatedBloc.state).thenReturn(
+      GetMovieTopRatedInitial(),
     );
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return BlocProvider<GetMovieRecommendationBloc>.value(
-      value: mockGetMovieRecommendationBloc,
+    return BlocProvider<GetMovieTopRatedBloc>.value(
+      value: mockGetMovieTopRatedBloc,
       child: MaterialApp(home: body),
     );
   }
 
   testWidgets('Page should display progress bar when loading',
       (WidgetTester tester) async {
-    when(mockGetMovieRecommendationBloc.state).thenReturn(
-      GetMovieRecommendationLoading(),
+    when(mockGetMovieTopRatedBloc.state).thenReturn(
+      GetMovieTopRatedLoading(),
     );
-    when(mockGetMovieRecommendationBloc.stream).thenAnswer(
-      (_) => Stream.value(GetMovieRecommendationLoading()),
+    when(mockGetMovieTopRatedBloc.stream).thenAnswer(
+      (_) => Stream.value(GetMovieTopRatedLoading()),
     );
 
     final progressFinder = find.byType(CircularProgressIndicator);
@@ -54,11 +52,11 @@ void main() {
 
   testWidgets('Page should display when data is loaded',
       (WidgetTester tester) async {
-    when(mockGetMovieRecommendationBloc.state).thenReturn(
-      GetMovieRecommendationLoaded([testMovie]),
+    when(mockGetMovieTopRatedBloc.state).thenReturn(
+      GetMovieTopRatedLoaded([testMovie]),
     );
-    when(mockGetMovieRecommendationBloc.stream).thenAnswer(
-      (_) => Stream.value(GetMovieRecommendationLoaded([testMovie])),
+    when(mockGetMovieTopRatedBloc.stream).thenAnswer(
+      (_) => Stream.value(GetMovieTopRatedLoaded([testMovie])),
     );
 
     final listViewFinder = find.byType(ListView);
@@ -71,12 +69,12 @@ void main() {
 
   testWidgets('Page should display text with message when Error',
       (WidgetTester tester) async {
-    when(mockGetMovieRecommendationBloc.state).thenReturn(
-      const GetMovieRecommendationFailure('Error message'),
+    when(mockGetMovieTopRatedBloc.state).thenReturn(
+      const GetMovieTopRatedFailure('Error message'),
     );
-    when(mockGetMovieRecommendationBloc.stream).thenAnswer(
+    when(mockGetMovieTopRatedBloc.stream).thenAnswer(
       (_) => Stream.value(
-        const GetMovieRecommendationFailure('Error message'),
+        const GetMovieTopRatedFailure('Error message'),
       ),
     );
 

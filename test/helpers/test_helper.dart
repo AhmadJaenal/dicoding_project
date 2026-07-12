@@ -16,6 +16,7 @@ import 'package:ditonton/domain/usecases/search_movies.dart';
 import 'package:ditonton/domain/usecases/search_serial_tv.dart';
 import 'package:ditonton/presentation/bloc/get_detail_movie/get_detail_movie_bloc.dart';
 import 'package:ditonton/presentation/bloc/get_movie_recommendation/get_movie_recommendation_bloc.dart';
+import 'package:ditonton/presentation/bloc/get_movie_top_rated/get_movie_top_rated_bloc.dart';
 import 'package:ditonton/presentation/bloc/get_popular_movie/get_popular_movie_bloc.dart';
 import 'package:ditonton/presentation/bloc/search/search_bloc.dart';
 import 'package:ditonton/presentation/bloc/watchlist/watchlist_bloc.dart';
@@ -73,6 +74,7 @@ import 'package:serialtv/domain/usecases/save_watchlist_serial_tv.dart';
   GetPopularMovieBloc,
   WatchlistBloc,
   SearchBloc,
+  GetMovieTopRatedBloc,
 ], customMocks: [
   MockSpec<IOClient>(as: #MockIOClient),
 ])

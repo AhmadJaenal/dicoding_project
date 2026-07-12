@@ -4,8 +4,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i13;
-import 'dart:convert' as _i51;
-import 'dart:typed_data' as _i52;
+import 'dart:convert' as _i52;
+import 'dart:typed_data' as _i53;
 
 import 'package:bloc/bloc.dart' as _i46;
 import 'package:core/entities/watchlist_table.dart' as _i24;
@@ -37,6 +37,8 @@ import 'package:ditonton/presentation/bloc/get_detail_movie/get_detail_movie_blo
     as _i47;
 import 'package:ditonton/presentation/bloc/get_movie_recommendation/get_movie_recommendation_bloc.dart'
     as _i45;
+import 'package:ditonton/presentation/bloc/get_movie_top_rated/get_movie_top_rated_bloc.dart'
+    as _i51;
 import 'package:ditonton/presentation/bloc/get_popular_movie/get_popular_movie_bloc.dart'
     as _i48;
 import 'package:ditonton/presentation/bloc/search/search_bloc.dart' as _i50;
@@ -2734,6 +2736,161 @@ class MockSearchBloc extends _i1.Mock implements _i50.SearchBloc {
       );
 }
 
+/// A class which mocks [GetMovieTopRatedBloc].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetMovieTopRatedBloc extends _i1.Mock
+    implements _i51.GetMovieTopRatedBloc {
+  MockGetMovieTopRatedBloc() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  bool get isClosed => (super.noSuchMethod(
+        Invocation.getter(#isClosed),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i51.GetMovieTopRatedState get state => (super.noSuchMethod(
+        Invocation.getter(#state),
+        returnValue: _i20.dummyValue<_i51.GetMovieTopRatedState>(
+          this,
+          Invocation.getter(#state),
+        ),
+      ) as _i51.GetMovieTopRatedState);
+
+  @override
+  _i13.Stream<_i51.GetMovieTopRatedState> get stream => (super.noSuchMethod(
+        Invocation.getter(#stream),
+        returnValue: _i13.Stream<_i51.GetMovieTopRatedState>.empty(),
+      ) as _i13.Stream<_i51.GetMovieTopRatedState>);
+
+  @override
+  void add(_i51.GetMovieTopRatedEvent? event) => super.noSuchMethod(
+        Invocation.method(
+          #add,
+          [event],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onEvent(_i51.GetMovieTopRatedEvent? event) => super.noSuchMethod(
+        Invocation.method(
+          #onEvent,
+          [event],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void emit(_i51.GetMovieTopRatedState? state) => super.noSuchMethod(
+        Invocation.method(
+          #emit,
+          [state],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void on<E extends _i51.GetMovieTopRatedEvent>(
+    _i46.EventHandler<E, _i51.GetMovieTopRatedState>? handler, {
+    _i46.EventTransformer<E>? transformer,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #on,
+          [handler],
+          {#transformer: transformer},
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onTransition(
+          _i46.Transition<_i51.GetMovieTopRatedEvent,
+                  _i51.GetMovieTopRatedState>?
+              transition) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #onTransition,
+          [transition],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onDone(
+    _i51.GetMovieTopRatedEvent? event, [
+    Object? error,
+    StackTrace? stackTrace,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #onDone,
+          [
+            event,
+            error,
+            stackTrace,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i13.Future<void> close() => (super.noSuchMethod(
+        Invocation.method(
+          #close,
+          [],
+        ),
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
+
+  @override
+  void onChange(_i46.Change<_i51.GetMovieTopRatedState>? change) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #onChange,
+          [change],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addError(
+    Object? error, [
+    StackTrace? stackTrace,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #addError,
+          [
+            error,
+            stackTrace,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void onError(
+    Object? error,
+    StackTrace? stackTrace,
+  ) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #onError,
+          [
+            error,
+            stackTrace,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
 /// A class which mocks [IOClient].
 ///
 /// See the documentation for Mockito's code generation for more information.
@@ -2815,7 +2972,7 @@ class MockIOClient extends _i1.Mock implements _i11.IOClient {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i51.Encoding? encoding,
+    _i52.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -2846,7 +3003,7 @@ class MockIOClient extends _i1.Mock implements _i11.IOClient {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i51.Encoding? encoding,
+    _i52.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -2877,7 +3034,7 @@ class MockIOClient extends _i1.Mock implements _i11.IOClient {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i51.Encoding? encoding,
+    _i52.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -2908,7 +3065,7 @@ class MockIOClient extends _i1.Mock implements _i11.IOClient {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i51.Encoding? encoding,
+    _i52.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -2956,7 +3113,7 @@ class MockIOClient extends _i1.Mock implements _i11.IOClient {
       ) as _i13.Future<String>);
 
   @override
-  _i13.Future<_i52.Uint8List> readBytes(
+  _i13.Future<_i53.Uint8List> readBytes(
     Uri? url, {
     Map<String, String>? headers,
   }) =>
@@ -2966,6 +3123,6 @@ class MockIOClient extends _i1.Mock implements _i11.IOClient {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i13.Future<_i52.Uint8List>.value(_i52.Uint8List(0)),
-      ) as _i13.Future<_i52.Uint8List>);
+        returnValue: _i13.Future<_i53.Uint8List>.value(_i53.Uint8List(0)),
+      ) as _i13.Future<_i53.Uint8List>);
 }
