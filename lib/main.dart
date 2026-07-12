@@ -19,6 +19,7 @@ import 'package:ditonton/presentation/pages/search_page.dart';
 
 import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,6 +48,7 @@ void main() async {
   await di.initMovie();
   await diSerial.initSerial();
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(false);
 
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(
