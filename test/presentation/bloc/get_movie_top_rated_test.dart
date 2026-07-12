@@ -74,4 +74,18 @@ void main() {
       },
     );
   });
+
+  group('GetMovieTopRatedRequested props', () {
+    test('props should be empty', () {
+      final event = GetMovieTopRatedRequested();
+      expect(event.props, []);
+    });
+
+    test('two instances should be equal', () {
+      expect(
+        GetMovieTopRatedRequested(),
+        GetMovieTopRatedRequested(),
+      );
+    });
+  });
 }

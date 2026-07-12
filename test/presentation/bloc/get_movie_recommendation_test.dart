@@ -23,13 +23,33 @@ void main() {
     expect(bloc.state, GetMovieRecommendationInitial());
   });
 
+  group('GetMovieRecommendationRequested props', () {
+    test('props should contain id', () {
+      const event = GetMovieRecommendationRequested(tId);
+      expect(event.props, [tId]);
+    });
+
+    test('two instances with the same id should be equal', () {
+      expect(
+        const GetMovieRecommendationRequested(tId),
+        const GetMovieRecommendationRequested(tId),
+      );
+    });
+
+    test('two instances with different id should NOT be equal', () {
+      expect(
+        const GetMovieRecommendationRequested(1),
+        isNot(const GetMovieRecommendationRequested(2)),
+      );
+    });
+  });
+
   group('GetMovieRecommendationRequested', () {
     blocTest<GetMovieRecommendationBloc, GetMovieRecommendationState>(
       'should emit [Loading, Loaded] when recommendations are successfully fetched',
       build: () {
         when(mockGetMovieRecommendations.execute(tId))
             .thenAnswer((_) async => Right(testMovieList));
-
         return bloc;
       },
       act: (bloc) => bloc.add(const GetMovieRecommendationRequested(tId)),
@@ -47,7 +67,6 @@ void main() {
       build: () {
         when(mockGetMovieRecommendations.execute(tId))
             .thenAnswer((_) async => const Right([]));
-
         return bloc;
       },
       act: (bloc) => bloc.add(const GetMovieRecommendationRequested(tId)),
@@ -66,7 +85,6 @@ void main() {
         when(mockGetMovieRecommendations.execute(tId)).thenAnswer(
           (_) async => Left(ServerFailure('Server Failure')),
         );
-
         return bloc;
       },
       act: (bloc) => bloc.add(const GetMovieRecommendationRequested(tId)),

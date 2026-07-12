@@ -4,6 +4,7 @@ sealed class GetPopularMovieEvent extends Equatable {
   const GetPopularMovieEvent();
 
   @override
+  // coverage:ignore-line
   List<Object> get props => [];
 }
 

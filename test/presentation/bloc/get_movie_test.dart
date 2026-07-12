@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:core/utils/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/presentation/bloc/get_playing_now_movie/get_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc/get_popular_movie/get_popular_movie_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -57,5 +58,33 @@ void main() {
         verify(mockGetNowPlayingMovies.execute());
       },
     );
+  });
+
+  group('GetMovieEventRequested props', () {
+    test('props should be empty', () {
+      const event = GetMovieEventRequested();
+      expect(event.props, []);
+    });
+
+    test('two instances should be equal', () {
+      expect(
+        const GetMovieEventRequested(),
+        const GetMovieEventRequested(),
+      );
+    });
+  });
+
+  group('GetPopularMovieRequsted props', () {
+    test('props should be empty', () {
+      const event = GetPopularMovieRequsted();
+      expect(event.props, []);
+    });
+
+    test('two instances should be equal', () {
+      expect(
+        const GetPopularMovieRequsted(),
+        const GetPopularMovieRequsted(),
+      );
+    });
   });
 }

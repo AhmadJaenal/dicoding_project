@@ -86,4 +86,25 @@ void main() {
       },
     );
   });
+
+  group('OnQueryChanged props', () {
+    test('props should contain query', () {
+      const event = OnQueryChanged('batman');
+      expect(event.props, ['batman']);
+    });
+
+    test('two instances with the same query should be equal', () {
+      expect(
+        const OnQueryChanged('batman'),
+        const OnQueryChanged('batman'),
+      );
+    });
+
+    test('two instances with different query should NOT be equal', () {
+      expect(
+        const OnQueryChanged('batman'),
+        isNot(const OnQueryChanged('superman')),
+      );
+    });
+  });
 }
