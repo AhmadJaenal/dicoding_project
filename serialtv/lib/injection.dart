@@ -7,7 +7,7 @@ import 'package:serialtv/serial_tv.dart';
 
 final locator = GetIt.instance;
 
-void initSerial() async {
+Future<void> initSerial() async {
   // bloc
   locator.registerFactory(() => GetSerialPlayingNowBloc(locator()));
   locator.registerFactory(() => GetDetailSerialBloc(locator(), locator()));
@@ -42,13 +42,20 @@ void initSerial() async {
     () => SerialLocalDataSourceImpl(databaseHelper: locator()),
   );
 
-  // helper
-  locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
+  if (!locator.isRegistered<DatabaseHelper>()) {
+    locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
+  }
 
-  // external
-  locator.registerLazySingleton(() => http.Client());
+  if (!locator.isRegistered<http.Client>()) {
+    locator.registerLazySingleton(() => http.Client());
+  }
 
-  // http client
-  final client = await SSLPinningHttpClient.getClient();
-  locator.registerLazySingleton<IOClient>(() => client);
+  if (!locator.isRegistered<IOClient>()) {
+    try {
+      final client = await SSLPinningHttpClient.getClient();
+      locator.registerLazySingleton<IOClient>(() => client);
+    } catch (e) {
+      locator.registerLazySingleton<IOClient>(() => IOClient());
+    }
+  }
 }

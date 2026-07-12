@@ -28,7 +28,7 @@ import 'package:http/io_client.dart';
 
 final locator = GetIt.instance;
 
-void initMovie() async {
+Future<void> initMovie() async {
   // bloc
   locator.registerFactory(() => GetDetailMovieBloc(locator(), locator()));
   locator.registerFactory(() => GetMovieTopRatedBloc(locator()));
@@ -58,6 +58,7 @@ void initMovie() async {
       localDataSource: locator(),
     ),
   );
+
   // data sources
   locator.registerLazySingleton<MovieRemoteDataSource>(
       () => MovieRemoteDataSourceImpl(client: locator()));
@@ -70,7 +71,10 @@ void initMovie() async {
   // external
   locator.registerLazySingleton(() => http.Client());
 
-  // http client
-  final client = await SSLPinningHttpClient.getClient();
-  locator.registerLazySingleton<IOClient>(() => client);
+  try {
+    final client = await SSLPinningHttpClient.getClient();
+    locator.registerLazySingleton<IOClient>(() => client);
+  } catch (e) {
+    locator.registerLazySingleton<IOClient>(() => IOClient());
+  }
 }

@@ -1,4 +1,4 @@
-import 'package:ditonton/presentation/bloc/get_movie_recommendation/get_movie_recommendation_bloc.dart';
+import 'package:ditonton/presentation/bloc/get_movie_top_rated/get_movie_top_rated_bloc.dart';
 import 'package:ditonton/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,9 +14,8 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => context
-        .read<GetMovieRecommendationBloc>()
-        .add(const GetMovieRecommendationRequested(1221)));
+    Future.microtask(() =>
+        context.read<GetMovieTopRatedBloc>().add(GetMovieTopRatedRequested()));
   }
 
   @override
@@ -27,12 +26,11 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocBuilder<GetMovieRecommendationBloc,
-            GetMovieRecommendationState>(
+        child: BlocBuilder<GetMovieTopRatedBloc, GetMovieTopRatedState>(
           builder: (context, state) {
-            if (state is GetMovieRecommendationLoading) {
+            if (state is GetMovieTopRatedLoading) {
               return Center(child: CircularProgressIndicator());
-            } else if (state is GetMovieRecommendationLoaded) {
+            } else if (state is GetMovieTopRatedLoaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final movie = state.movies[index];

@@ -44,8 +44,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  di.initMovie();
-  diSerial.initSerial();
+  await di.initMovie();
+  await diSerial.initSerial();
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   PlatformDispatcher.instance.onError = (error, stack) {
